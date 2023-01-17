@@ -1,5 +1,5 @@
-import Post from "../models/Posts";
-import User from "../models/User";
+import Post from "../models/Posts.js";
+import User from "../models/User.js";
 // Create
 
 export const createPost = async (req, res) => {
@@ -31,7 +31,7 @@ export const createPost = async (req, res) => {
 };
 
 // Read
-const getFeedPosts = async (req, res) => {
+export const getFeedPosts = async (req, res) => {
   try {
     const posts = await Post.find();
     res.status(200).json(posts);
@@ -39,7 +39,7 @@ const getFeedPosts = async (req, res) => {
     res.status(404).json(error.message);
   }
 };
-const getUserPosts = async (req, res) => {
+export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
     const posts = await Post.find({ userId });
