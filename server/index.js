@@ -16,6 +16,9 @@ import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/posts.js";
 import { verifyToken } from "./middleware/auth.js";
 
+// import User from "./models/User.js";
+// import Post from "./models/Posts.js";
+// import { users, posts } from "./seeds/index.js";
 // Configurations for using type modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -59,7 +62,10 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() =>
-    app.listen(PORT, () => console.log(`Server listening on Port: ${PORT} ✅`))
-  )
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server listening on Port: ${PORT} ✅`));
+
+    // User.insertMany(users);
+    // Post.insertMany(posts);
+  })
   .catch((error) => console.log(error, "Database was not connected ❌"));
