@@ -4,9 +4,10 @@ import React from "react";
 import UserWidget from "pages/Widgets/UserWidget";
 import MyPostWidget from "pages/Widgets/MyPostWidget";
 import { useSelector } from "react-redux";
+import PostsWidget from "pages/Widgets/PostsWidget";
 function Home() {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
-  const { _id, pictuePath } = useSelector((state) => state.user);
+  const { _id, picturePath } = useSelector((state) => state.user);
 
   return (
     <Box>
@@ -20,13 +21,14 @@ function Home() {
         justifyContent="space-between"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={_id} picturePath={pictuePath} />
+          <UserWidget userId={_id} picturePath={picturePath} />
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          <MyPostWidget></MyPostWidget>
+          <MyPostWidget picturePath={picturePath} />
+          <PostsWidget userId={_id} />
         </Box>
         {isNonMobileScreens && <Box flexBasis="26%"></Box>}
       </Box>
