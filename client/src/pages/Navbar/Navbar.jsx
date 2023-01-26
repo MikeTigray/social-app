@@ -31,7 +31,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  console.log("Over hereeee!", user);
+
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   //   Themes
@@ -92,7 +92,7 @@ function Navbar() {
           <Help sx={{ fontSize: "25px" }} />
           <FormControl variant="standard" value={fullName}>
             <Select
-              value={"Mike"}
+              value={fullName}
               sx={{
                 backgroundColor: neutralLight,
                 width: "150px",

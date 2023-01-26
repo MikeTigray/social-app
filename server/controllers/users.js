@@ -2,8 +2,8 @@ import User from "../models/User.js";
 
 export const getUser = async (req, res) => {
   try {
-    const userId = req.params;
-    const user = await User.findById(userId);
+    const { id } = req.params;
+    const user = await User.findById(id);
 
     res.status(200).json(user);
   } catch (error) {
@@ -13,8 +13,8 @@ export const getUser = async (req, res) => {
 
 export const getUserFriends = async (req, res) => {
   try {
-    const userId = req.params;
-    const user = await User.findById({ userId });
+    const { id } = req.params;
+    const user = await User.findById(id);
 
     const friends = await Promise.all(
       user.friends.map((id) => {

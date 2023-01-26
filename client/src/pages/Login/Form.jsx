@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -9,19 +8,12 @@ import {
   useTheme,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-
-// Form library
 import { Formik } from "formik";
-
-// Validation library
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "state";
-
-// To drop files
 import Dropzone from "react-dropzone";
-
 import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
@@ -54,7 +46,7 @@ const initialValuesLogin = {
   password: "",
 };
 
-function Form() {
+const Form = () => {
   const [pageType, setPageType] = useState("login");
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -64,8 +56,8 @@ function Form() {
   const isRegister = pageType === "register";
 
   const register = async (values, onSubmitProps) => {
-    // Allows us to send images alongside forms
-    const formData = new formData();
+    // this allows us to send form info with image
+    const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
     }
@@ -73,17 +65,19 @@ function Form() {
 
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
-      { method: "POST", body: formData }
+      {
+        method: "POST",
+        body: formData,
+      }
     );
     const savedUser = await savedUserResponse.json();
-
-    // comes with formik
     onSubmitProps.resetForm();
 
     if (savedUser) {
       setPageType("login");
     }
   };
+
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
       method: "POST",
@@ -91,7 +85,6 @@ function Form() {
       body: JSON.stringify(values),
     });
     const loggedIn = await loggedInResponse.json();
-
     onSubmitProps.resetForm();
     if (loggedIn) {
       dispatch(
@@ -105,17 +98,14 @@ function Form() {
   };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
-    if (isLogin) {
-      await login(values, onSubmitProps);
-    }
-    if (isRegister) {
-      await register(values, onSubmitProps);
-    }
+    if (isLogin) await login(values, onSubmitProps);
+    if (isRegister) await register(values, onSubmitProps);
   };
+
   return (
     <Formik
-      initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
       onSubmit={handleFormSubmit}
+      initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
       validationSchema={isLogin ? loginSchema : registerSchema}
     >
       {({
@@ -132,7 +122,7 @@ function Form() {
           <Box
             display="grid"
             gap="30px"
-            gridTemplateColumns="repeat(4,minmax(0,1fr))"
+            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
             sx={{
               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
             }}
@@ -140,48 +130,48 @@ function Form() {
             {isRegister && (
               <>
                 <TextField
-                  name="firstName"
                   label="First Name"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.firstName}
-                  sx={{ gridColumn: "span 2" }}
+                  name="firstName"
                   error={
                     Boolean(touched.firstName) && Boolean(errors.firstName)
                   }
                   helperText={touched.firstName && errors.firstName}
+                  sx={{ gridColumn: "span 2" }}
                 />
                 <TextField
-                  name="LastName"
                   label="Last Name"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.LastName}
+                  value={values.lastName}
+                  name="lastName"
+                  error={Boolean(touched.lastName) && Boolean(errors.lastName)}
+                  helperText={touched.lastName && errors.lastName}
                   sx={{ gridColumn: "span 2" }}
-                  error={Boolean(touched.LastName) && Boolean(errors.LastName)}
-                  helperText={touched.LastName && errors.LastName}
                 />
                 <TextField
-                  name="location"
                   label="Location"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.location}
-                  sx={{ gridColumn: "span 4" }}
+                  name="location"
                   error={Boolean(touched.location) && Boolean(errors.location)}
                   helperText={touched.location && errors.location}
+                  sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
-                  name="occupation"
                   label="Occupation"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.occupation}
-                  sx={{ gridColumn: "span 4" }}
+                  name="occupation"
                   error={
                     Boolean(touched.occupation) && Boolean(errors.occupation)
                   }
                   helperText={touched.occupation && errors.occupation}
+                  sx={{ gridColumn: "span 4" }}
                 />
                 <Box
                   gridColumn="span 4"
@@ -218,30 +208,31 @@ function Form() {
                 </Box>
               </>
             )}
+
             <TextField
-              name="email"
               label="Email"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.email}
-              sx={{ gridColumn: "span 4" }}
+              name="email"
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={touched.email && errors.email}
+              sx={{ gridColumn: "span 4" }}
             />
             <TextField
-              name="password"
               label="Password"
+              type="password"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.password}
-              sx={{ gridColumn: "span 4" }}
+              name="password"
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
+              sx={{ gridColumn: "span 4" }}
             />
           </Box>
 
-          {/* Buttons */}
-
+          {/* BUTTONS */}
           <Box>
             <Button
               fullWidth
@@ -264,11 +255,14 @@ function Form() {
               sx={{
                 textDecoration: "underline",
                 color: palette.primary.main,
-                "&:hover": { color: palette.primary.dark, cursor: "pointer" },
+                "&:hover": {
+                  cursor: "pointer",
+                  color: palette.primary.light,
+                },
               }}
             >
               {isLogin
-                ? "Not in friends yet? 🫢. Join here."
+                ? "Don't have an account? Sign Up here."
                 : "Already have an account? Login here."}
             </Typography>
           </Box>
@@ -276,6 +270,6 @@ function Form() {
       )}
     </Formik>
   );
-}
+};
 
 export default Form;
