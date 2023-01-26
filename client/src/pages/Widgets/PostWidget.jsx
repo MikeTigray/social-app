@@ -19,8 +19,8 @@ import WidgetWrapper from "components/WidgetWrapper";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
+
 const PostWidget = ({
-  key,
   postId,
   postUserId,
   name,
@@ -80,7 +80,11 @@ const PostWidget = ({
         <FlexBetween gap="1rem">
           <FlexBetween gap="0.3rem">
             <IconButton onClick={patchLike}>
-              {isLiked ? <FavoriteBorderOutlined /> : <FavoriteOutlined />}
+              {isLiked ? (
+                <FavoriteOutlined color={primary} />
+              ) : (
+                <FavoriteBorderOutlined />
+              )}
             </IconButton>
             <Typography>{likeCount}</Typography>
           </FlexBetween>
