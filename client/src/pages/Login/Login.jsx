@@ -14,7 +14,7 @@ function Login() {
         textAlign="center"
       >
         <Typography color="primary" fontWeight="bold" fontSize="32px">
-          friends
+          Friends
         </Typography>
       </Box>
 
