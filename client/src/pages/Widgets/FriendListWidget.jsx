@@ -20,6 +20,7 @@ const FriendListWidget = ({ userId }) => {
       }
     );
     const data = await response.json();
+
     dispatch(setFriends({ friends: data }));
   };
 
@@ -40,7 +41,7 @@ const FriendListWidget = ({ userId }) => {
       <Box display="flex" flexDirection="column" gap="1.5rem">
         {friends.map((friend) => (
           <Friend
-            key={friend._id}
+            key={friend.firstName}
             friendId={friend._id}
             name={`${friend.firstName} ${friend.lastName}`}
             subtitle={friend.occupation}

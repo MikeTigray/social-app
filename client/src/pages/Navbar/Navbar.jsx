@@ -56,7 +56,7 @@ function Navbar() {
             "&:hover": { color: primaryLight, cursor: "pointer" },
           }}
         >
-          friends
+          Friends
         </Typography>
 
         {/*  Desktop devices  */}
