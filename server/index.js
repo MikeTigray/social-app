@@ -33,8 +33,9 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use(express.static(path.join(__dirname, "../client/build")));
 }
 /* FILE STORAGE */
 const storage = multer.diskStorage({
@@ -56,11 +57,14 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
 // Mongoose Setup
 const PORT = process.env.PORT || 6001;
 mongoose.set("strictQuery", true);
 mongoose
-  .connect(process.env.MONGO_URL, {
+  .connect(process.env.MONGO_URL || ``, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
