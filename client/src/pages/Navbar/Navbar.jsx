@@ -163,7 +163,7 @@ function Navbar() {
             <Help sx={{ fontSize: "25px" }} />
             <FormControl variant="standard" value={fullName}>
               <Select
-                value={"Mike"}
+                value={fullName}
                 sx={{
                   backgroundColor: neutralLight,
                   width: "150px",

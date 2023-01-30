@@ -19,16 +19,18 @@ const AdvertWidget = () => {
         width="100%"
         height="auto"
         alt="advert"
-        src="http://localhost:3001/assets/info4.jpeg"
+        src="http://localhost:3001/assets/arsenal.jpeg"
         style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
       />
       <FlexBetween>
-        <Typography color={main}>MikaCosmetics</Typography>
-        <Typography color={medium}>mikacosmetics.com</Typography>
+        <Typography color={main}>Arsenal F.C</Typography>
+        <Typography color={medium}>Skysports.com</Typography>
       </FlexBetween>
       <Typography color={medium} m="0.5rem 0">
-        Your pathway to stunning and immaculate beauty and made sure your skin
-        is exfoliating skin and shining like light.
+        The Premier League title race is about to get real for Arsenal. For the
+        first time since Arsene Wenger's "Invincibles" won the club's last title
+        in 2003-04, Arsenal feel like a team that can go all the way and take
+        the trophy to the Emirates.
       </Typography>
     </WidgetWrapper>
   );
