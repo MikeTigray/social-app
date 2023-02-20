@@ -6,21 +6,21 @@ const accessKey = process.env.ACCESS_KEY;
 const secretAccessKey = process.env.SECRET_ACCESS_KEY;
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 // Create
-const s3 = new S3Client({
-  credentials: { accessKeyId: accessKey, secretAccessKey: secretAccessKey },
-  region: bucketRegion,
-});
+// const s3 = new S3Client({
+//   credentials: { accessKeyId: accessKey, secretAccessKey: secretAccessKey },
+//   region: bucketRegion,
+// });
 export const createPost = async (req, res) => {
   try {
     const { userId, description, picturePath } = req.body;
 
     const user = await User.findById(userId);
-    const params = {
-      Bucket: bucketName,
-      key: req.file.originalname,
-      Body: req.file.buffer,
-      ContentType: req.file.mimetype,
-    };
+    // const params = {
+    //   Bucket: bucketName,
+    //   key: req.file.originalname,
+    //   Body: req.file.buffer,
+    //   ContentType: req.file.mimetype,
+    // };
 
     const newPost = new Post({
       userId,
@@ -35,8 +35,8 @@ export const createPost = async (req, res) => {
     });
 
     await newPost.save();
-    const command = new PutObjectCommand(params);
-    await s3.send(command);
+    // const command = new PutObjectCommand(params);
+    // await s3.send(command);
     const posts = await Post.find();
     res.status(200).json(posts);
   } catch (error) {
